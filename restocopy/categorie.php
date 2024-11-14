@@ -1,14 +1,22 @@
 <!DOCTYPE html>
 <html lang="fr">
-    <?php include 'header.php'; ?>
+    <?php include 'header.php'; 
+    include 'connexion.php';
+include 'DAO.php'; 
+?>
 <body>
     
-    
+<?php 
+$categories = get_categories(); 
+   $cat = get_cat();
+   $icat = $cat->id;
+   get_plats($icat);
+    ?>
     <section>
         <div class="row justify-content-center mb-4 title">
             <div class="col-12 d-flex align-items-center justify-content-center">
                 <span class="decorative-element me-2"></span>
-                <h3 class="category-title">Plats principaux</h3>
+                <h3 class="category-title"><?php echo $cat->libelle; ?></h3>
                 <span class="decorative-element ms-2"></span>
             </div>
         </div>

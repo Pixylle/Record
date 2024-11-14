@@ -165,86 +165,41 @@ h2 {
 
 
  .cath {
+  display: flex; /* Используем flexbox */
+  flex-direction: column; /* Элементы по вертикали */
+  align-items: center; /* Выравниваем по центру */
+  justify-content: flex-start; /* Сначала элементы идут сверху */
+  height: 350px;
+  width: 400px;
   margin: 3px 10px;
   border-radius: 5px;
-  background-color: #1d1c1c;
-  }
-  .un {
-    background-image:  url('../../src/img/princ.jpg');
-    
-  
-  }
-  
-  .deux {
-    background-image:  url('../../src/img/sushi.jpg');
-    
-  
-  }
-  
-  .quatre {
-    background-image:  url('../../src/img/menu-pizza.jpg');
-    
-  
-  }
-  
-  .six {
-    background-image:  url('../../src/img/dessert.jpg');
-    
-  
-  }
-  
-  .trois {
-    background-image:  url('../../src/img/grill.jpg');
-    
-  
-  }
-  
-  .cinq {
-    background-image:  url('../../src/img/veget.jpeg');
-    
-  
-  }
+  color: rgb(63, 61, 61); /* Цвет текста */
+  text-align: center;
+  overflow: hidden; /* Обрезаем все, что выходит за пределы */
+}
 
-   
-  .cath {
-    position: relative; /* Ограничиваем область действия псевдоэлемента внутри плитки */
-    height: 250px;
-    width: 400px;
-    margin: 3px 10px;
-    border-radius: 5px;
-    color: white; /* Белый текст для контраста */
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
-    overflow: hidden; /* Обрезаем любые выходящие за пределы элементы */
-  }
-  
-  .cath::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.5); /* Полупрозрачный черный слой */
-    z-index: 1; /* Помещаем затемнение над изображением */
-    border-radius: 5px; /* Закругляем углы так же, как у родителя */
-  }
-  
-  .cath p {
-    position: relative;
-    z-index: 2; /* Помещаем текст поверх затемнения */
-    margin: 0;
-    font-size: 1.5rem;
-    font-weight: bold;
-  }
-  
-  .un, .deux, .trois, .quatre, .cinq, .six {
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-  }
+.category-name {
+  margin-bottom: 10px; /* Отступ между текстом и изображением */
+  font-weight: bold;
+  z-index: 2; /* Название поверх картинки */
+}
+
+.category-image {
+  width: 100%; /* Картинка будет растягиваться по ширине */
+  height: 100%; /* Высота будет пропорциональна контейнеру */
+  object-fit: cover; /* Сохраняем пропорции, но заполняем контейнер */
+  display: block; /* Убираем возможные отступы вокруг изображения */
+}
+
+a {
+  display: block; /* Ссылка занимает всю доступную площадь */
+  width: 100%; /* Чтобы картинка не съезжала */
+  height: 100%; /* Пропорционально контейнеру */
+  text-decoration: none; /* Убираем подчеркивание */
+}
+
+
+
 .title {
 margin: 30px;
 }

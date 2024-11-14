@@ -8,6 +8,10 @@
     <link rel="stylesheet" href="assets/css/style3.css">
 </head>
 <body>
+<?php include 'connexion.php';
+include 'DAO.php'; 
+?>
+
     <header>
         <div class="overlay">    
         <video playsinline autoplay="autoplay" muted="muted" loop="loop">
@@ -45,9 +49,7 @@
                                         <li><a class="dropdown-item" href="#">Pizzas</a></li>
                                         <li><a class="dropdown-item" href="#">Végétarien</a></li>
                                         <li><a class="dropdown-item" href="#">Desserts</a></li>
-                                        <li><a class="dropdown-item" href="#">Boissons</a></li>
-                                        <li><a class="dropdown-item" href="#">Entrées</a></li>
-                                        <li><a class="dropdown-item" href="#">Salades</a></li>
+                                        
                                     </ul>
                                 </li>
                             </ul>
@@ -63,20 +65,20 @@
                 
                 <div id="content">
                 <div id="logo" class="d-flex">
-                    <img src="/src/img/logonoir-removebg-preview.png" alt="Logo">
+                    <img src="src/img/logonoir-removebg-preview.png" alt="Logo">
                 </div>
                 <div class="promo-text">
                     <h2>Découvrez <span style="color: #50bda5;">Gourmango</span></h2>
                     <p>Savourez des moments délicieux</p> 
                 </div>
-                <div class="iconplat d-none d-md-block"><img src="/src/img/clean_logo_without_text (1).png"></div>
+                <div class="iconplat d-none d-md-block"><img src="src/img/clean_logo_without_text (1).png"></div>
             </div>
             </div>
           </div>
         </div>
     </header>
     
-    <section id="section1" data-speed="8" data-type="background" class="Catégorie parallax">
+    <section id="section1" data-speed="8" data-type="background" class="Catégorie parallax p-2">
         <div class="container">
             <div class="row justify-content-center mb-4 title">
                 <div class="col-12 d-flex align-items-center justify-content-center">
@@ -85,36 +87,33 @@
                     <span class="decorative-element ms-2"></span>
                 </div>
             </div>
+            
+
+
+
             <div class="row justify-content-center mb-3">
-                <div class="col-3 cath un">
-                   <a href="/Platpprinc.php"><p>Plats principaux</p></a>
-                </div>
-                <div class="col-3 deux cath">
-                    <p>Cuisine asiatique</p>
-                </div>
-                <div class="col-3 cath trois">
-                    <p>Grillades</p>
-                </div>
-                <div class="col-3 cath quatre">
-                    <p>Pizzas</p>
-                </div>
-                <div class="col-3 cath cinq">
-                    <p>Végétarien</p>
-                </div>
-                <div class="col-3 cath six">
-                    <p>Desserts</p>
-                </div>
-                <div class="col-3 cath quatre">
-                    <p>Boissons</p>
-                </div>
-                <div class="col-3 cath cinq">
-                    <p>Entrées</p>
-                </div>
-                <div class="col-3 cath six">
-                    <p>Salades</p>
-                </div>
+    <?php 
+    $categories = get_categories(); // Сохраняем результат работы функции
+    
+    // Проверяем, что категории не пусты
+    if (!empty($categories)) {
+        foreach($categories as $category): ?>
+            <div class="col-3 cath">
+                <!-- Название категории над картинкой -->
+                <p class="category-name"><?php echo $category->libelle; ?></p>
+                
+                <!-- Картинка категории -->
+                <a href="categorie.php?id=<?php echo $category->id;?>"><img src="src/img/<?php echo $category->image; ?>" alt="<?php echo $category->libelle; ?>" class="category-image"></a>
             </div>
-        </div>
+    <?php endforeach; 
+    } else {
+        echo "<p>Категории не найдены</p>";
+    }
+    ?>
+</div>
+
+
+
     </section>
     
     <section class="plat-de-jour">
@@ -129,21 +128,21 @@
             <div id="carouselExampleSlidesOnly" class="carousel slide" data-bs-ride="carousel">
                 <div class="carousel-inner">
                     <div class="carousel-item active">
-                        <img src="/src/img/car1.jpg" class="d-block w-100 carousel-image" alt="Plat 1">
+                        <img src="src/img/car1.jpg" class="d-block w-100 carousel-image" alt="Plat 1">
                         <div class="carousel-caption">
                             <h5>Plat 1</h5>
                             <p>Description du plat 1</p>
                         </div>
                     </div>
                     <div class="carousel-item">
-                        <img src="/src/img/car2.jpg" class="d-block w-100 carousel-image" alt="Plat 2">
+                        <img src="src/img/car2.jpg" class="d-block w-100 carousel-image" alt="Plat 2">
                         <div class="carousel-caption">
                             <h5>Plat 2</h5>
                             <p>Description du plat 2</p>
                         </div>
                     </div>
                     <div class="carousel-item">
-                        <img src="/src/img/car3.jpg" class="d-block w-100 carousel-image" alt="Plat 3">
+                        <img src="src/img/car3.jpg" class="d-block w-100 carousel-image" alt="Plat 3">
                         <div class="carousel-caption">
                             <h5>Plat 3</h5>
                             <p>Description du plat 3</p>
@@ -155,7 +154,7 @@
     </section>
   
     <section id="team-carousel" class="carousel" id="section3" data-speed="2" data-type="background">
-        <div class="row justify-content-center mb-4 title">
+        <div class="row justify-content-centecat.libeller mb-4 title">
             <div class="col-12 d-flex align-items-center justify-content-center">
                 <span class="decorative-element me-2"></span>
                 <h3 class="category-title">Notre Équipe</h3>
