@@ -23,7 +23,7 @@ body{
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
-  height: 50vh;
+  height: 45vh;
   color: rgb(255, 255, 255);
   z-index: 1;
   overflow: hidden; /* Для обрезки псевдоэлемента, если он выйдет за границы */
@@ -184,6 +184,9 @@ h2 {
   z-index: 2; /* Название поверх картинки */
 }
 
+
+
+
 .category-image {
   width: 100%; /* Картинка будет растягиваться по ширине */
   height: 100%; /* Высота будет пропорциональна контейнеру */
@@ -207,6 +210,11 @@ margin: 30px;
   .container {
       margin-top: 30px;
       margin-bottom: 30px;
+      display: grid;
+      grid-template-columns: repeat(3,1fr);
+      grid-gap: 40px;
+      justify-content: center;
+      align-items: center;
   }
   
   .category-title {
@@ -383,6 +391,11 @@ margin: 30px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   transition: transform 0.2s;
   margin-bottom: 20px;
+  display: flex;
+  flex-direction: column; 
+}
+.card-body {
+  flex-grow: 1; /* Заставляет тело карточки занимать все доступное пространство */
 }
 
 .card:hover {
@@ -423,7 +436,7 @@ border-color: #8db8b2;
 }
 
 .cath a{
- color: white; 
+ color: #262525;
  text-decoration: none;
 }
 
@@ -511,7 +524,8 @@ background-size: cover;
 background-repeat: no-repeat;
 background-attachment: fixed;
 background-position: center; 
-height: 100vh; /* 100% of viewport height */
+height: auto; /* 100% of viewport height */
+width: 100%;
 margin: 0 auto; 
 position: relative; 
 
@@ -531,7 +545,6 @@ position: relative;
 
 
 }
-
 
 
 
@@ -652,4 +665,83 @@ position: relative;
 
 }
 
+.cart-item {
+  border-bottom: 1px solid #ddd;
+  padding: 15px 0;
+}
+.cart-item:last-child {
+  border-bottom: none;
+}
+.cart-icon {
+  font-size: 1.5rem;
+  color: #50bda5;
+}
+.cart-header {
+  font-weight: bold;
+  font-size: 1.2rem;
+}
+.total {
+  font-weight: bold;
+  font-size: 1.5rem;
+  text-align: right;
+}
+
+
+/* Контейнер иконки корзины */
+.floating-cart {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 1000; /* Поверх всех элементов */
+  background-color: #28a745;
+  border-radius: 50%;
+  width: 60px;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+}
+
+/* Ссылка внутри корзины */
+.floating-cart .cart-link {
+  text-decoration: none;
+  color: white;
+  font-size: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+/* Число товаров в корзине */
+.floating-cart .cart-count {
+  position: absolute;
+  top: -5px;
+  right: -5px;
+  background-color: #dc3545;
+  color: white;
+  border-radius: 50%;
+  font-size: 14px;
+  font-weight: bold;
+  width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+p .footer {
+  color:beige;
+}
+
+a {
+  color:#50bda5;
+}
+
+a:hover {
+  color:white; 
+}
 

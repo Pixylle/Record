@@ -99,11 +99,12 @@ include 'DAO.php';
     if (!empty($categories)) {
         foreach($categories as $category): ?>
             <div class="col-3 cath">
+            <a href="categorie.php?id=<?php echo $category->id;?>">
                 <!-- Название категории над картинкой -->
                 <p class="category-name"><?php echo $category->libelle; ?></p>
                 
                 <!-- Картинка категории -->
-                <a href="categorie.php?id=<?php echo $category->id;?>"><img src="src/img/<?php echo $category->image; ?>" alt="<?php echo $category->libelle; ?>" class="category-image"></a>
+                <img src="src/img/<?php echo $category->image; ?>" alt="<?php echo $category->libelle; ?>" class="category-image"></a>
             </div>
     <?php endforeach; 
     } else {

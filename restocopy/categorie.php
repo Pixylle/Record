@@ -3,14 +3,17 @@
     <?php include 'header.php'; 
     include 'connexion.php';
 include 'DAO.php'; 
+
 ?>
 <body>
     
 <?php 
-$categories = get_categories(); 
-   $cat = get_cat();
-   $icat = $cat->id;
-   get_plats($icat);
+    
+   $cat_id = $_GET["id"];
+   $cat = get_cat($cat_id);
+   $plats = get_plats($cat_id);
+   $i=0;
+   
     ?>
     <section>
         <div class="row justify-content-center mb-4 title">
@@ -20,301 +23,49 @@ $categories = get_categories();
                 <span class="decorative-element ms-2"></span>
             </div>
         </div>
-      
-        <div id="carouselExampleIndicators" class="carousel slide">
-            <div class="carousel-indicators">
-              <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
-              <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" aria-label="Slide 2"></button>
-              <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" aria-label="Slide 3"></button>
-            </div>
-            <div class="carousel-inner">
-              <div class="carousel-item active">
-                <div class="container d-block w-100">
-                    <div class="row">
-                        <div class="col-md-4">
-                            <div class="card">
-                                <img src="/src/img/pp1.jpeg" class="card-img-top" alt="Crustaceans Lobsters">
-                                <div class="card-body">
-                                    <h5 class="card-title">$51.00</h5>
-                                    <p class="card-text">Crustaceans Lobsters</p>
-                                    <p>4 Chicken Legs • Chili Sauce • Soft Drinks</p>
-                                    <button class="btn btn-outline-success btn-add-to-cart"><i class="fa fa-shopping-cart"></i> Add to cart</button>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="card">
-                                <img src="/src/img/PP2.jpg" class="card-img-top" alt="Chicken Nuggets">
-                                <div class="card-body">
-                                    <h5 class="card-title">$49.00</h5>
-                                    <p class="card-text">Chicken Nuggets</p>
-                                    <p>4 Chicken Legs • Chili Sauce • Soft Drinks</p>
-                                    <button class="btn btn-outline-success btn-add-to-cart"><i class="fa fa-shopping-cart"></i> Add to cart</button>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="card">
-                                <img src="/src/img/PP3.jpg" class="card-img-top" alt="Chicken Alfredo">
-                                <div class="card-body">
-                                    <h5 class="card-title">$36.00</h5>
-                                    <p class="card-text">Chicken Alfredo</p>
-                                    <p>4 Chicken Legs • Chili Sauce • Soft Drinks</p>
-                                    <button class="btn btn-outline-success btn-add-to-cart"><i class="fa fa-shopping-cart"></i> Add to cart</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
         
-                    <div class="row">
-                        <div class="col-md-4">
-                            <div class="card">
-                                <img src="/src/img/PP4.jpg" class="card-img-top" alt="Crustaceans Lobsters">
-                                <div class="card-body">
-                                    <h5 class="card-title">$51.00</h5>
-                                    <p class="card-text">Crustaceans Lobsters</p>
-                                    <p>4 Chicken Legs • Chili Sauce • Soft Drinks</p>
-                                    <button class="btn btn-outline-success btn-add-to-cart"><i class="fa fa-shopping-cart"></i> Add to cart</button>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="card">
-                                <img src="/src/img/PP5.png" class="card-img-top" alt="Chicken Nuggets">
-                                <div class="card-body">
-                                    <h5 class="card-title">$49.00</h5>
-                                    <p class="card-text">Chicken Nuggets</p>
-                                    <p>4 Chicken Legs • Chili Sauce • Soft Drinks</p>
-                                    <button class="btn btn-outline-success btn-add-to-cart"><i class="fa fa-shopping-cart"></i> Add to cart</button>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="card">
-                                <img src="/src/img/PP6.jpg" class="card-img-top" alt="Chicken Alfredo">
-                                <div class="card-body">
-                                    <h5 class="card-title">$36.00</h5>
-                                    <p class="card-text">Chicken Alfredo</p>
-                                    <p>4 Chicken Legs • Chili Sauce • Soft Drinks</p>
-                                    <button class="btn btn-outline-success btn-add-to-cart"><i class="fa fa-shopping-cart"></i> Add to cart</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+        <div class="container d-block w-100">
+    <?php 
+    $i = 0; // Счётчик для строк
+    foreach ($plats as $plat): 
+        if ($i % 3 == 0): echo '<div class="row">'; // Открываем строку каждые 3 карточки
+        endif; 
+    ?>
+        <div class="col-md-4">
+            <!-- Карточка как форма -->
+            <form method="POST" action="addcard.php" class="card">
+                <img src="src/img/<?php echo $plat->image ?>" class="card-img-top" alt="<?php $plat->libelle; ?>">
+                <div class="card-body">
+                    <h5 class="card-title"><?php echo $plat->prix ?>$</h5>
+                    <p class="card-text"><?php echo $plat->libelle; ?></p>
+                    <p><?php echo $plat->description; ?></p>
+                    
+                    <!-- Только ID товара -->
+                    <input type="hidden" name="plat_id" value="<?php echo $plat->id; ?>">
+                    <input type="hidden" name="plat_name" value="<?php echo $plat->libelle; ?>">
+                    <input type="hidden" name="plat_prix" value="<?php echo $plat->prix; ?>">
+                    <input type="hidden" name="id_categorie" value="<?php echo $plat->id_categorie; ?>">
+                    <!-- Кнопка "Добавить в корзину" -->
+                    <button type="submit" name="action" value="add_to_cart" class="btn btn-outline-success">
+                        <i class="fa-solid fa-plus"></i> Ajouter
+                    </button>
+
+                    <!-- Кнопка "Купить" -->
+                    <button type="submit" name="action" value="buy_now" class="btn btn-outline-success">
+                        <i class="fa fa-shopping-cart"></i> Acheter
+                    </button>
                 </div>
-              </div>
-              <div class="carousel-item">
-                <div class="container d-block w-100">
-                    <div class="row">
-                        <div class="col-md-4">
-                            <div class="card">
-                                <img src="/src/img/pp1.jpeg" class="card-img-top" alt="Crustaceans Lobsters">
-                                <div class="card-body">
-                                    <h5 class="card-title">$51.00</h5>
-                                    <p class="card-text">Crustaceans Lobsters</p>
-                                    <p>4 Chicken Legs • Chili Sauce • Soft Drinks</p>
-                                    <button class="btn btn-outline-success btn-add-to-cart"><i class="fa fa-shopping-cart"></i> Add to cart</button>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="card">
-                                <img src="/src/img/PP2.jpg" class="card-img-top" alt="Chicken Nuggets">
-                                <div class="card-body">
-                                    <h5 class="card-title">$49.00</h5>
-                                    <p class="card-text">Chicken Nuggets</p>
-                                    <p>4 Chicken Legs • Chili Sauce • Soft Drinks</p>
-                                    <button class="btn btn-outline-success btn-add-to-cart"><i class="fa fa-shopping-cart"></i> Add to cart</button>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="card">
-                                <img src="/src/img/PP3.jpg" class="card-img-top" alt="Chicken Alfredo">
-                                <div class="card-body">
-                                    <h5 class="card-title">$36.00</h5>
-                                    <p class="card-text">Chicken Alfredo</p>
-                                    <p>4 Chicken Legs • Chili Sauce • Soft Drinks</p>
-                                    <button class="btn btn-outline-success btn-add-to-cart"><i class="fa fa-shopping-cart"></i> Add to cart</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-        
-                    <div class="row">
-                        <div class="col-md-4">
-                            <div class="card">
-                                <img src="/src/img/PP4.jpg" class="card-img-top" alt="Crustaceans Lobsters">
-                                <div class="card-body">
-                                    <h5 class="card-title">$51.00</h5>
-                                    <p class="card-text">Crustaceans Lobsters</p>
-                                    <p>4 Chicken Legs • Chili Sauce • Soft Drinks</p>
-                                    <button class="btn btn-outline-success btn-add-to-cart btn-add-to-cart"><i class="fa fa-shopping-cart"></i> Add to cart</button>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="card">
-                                <img src="/src/img/PP5.png" class="card-img-top" alt="Chicken Nuggets">
-                                <div class="card-body">
-                                    <h5 class="card-title">$49.00</h5>
-                                    <p class="card-text">Chicken Nuggets</p>
-                                    <p>4 Chicken Legs • Chili Sauce • Soft Drinks</p>
-                                    <button class="btn btn-outline-success btn-add-to-cart"><i class="fa fa-shopping-cart"></i> Add to cart</button>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="card">
-                                <img src="/src/img/PP6.jpg" class="card-img-top" alt="Chicken Alfredo">
-                                <div class="card-body">
-                                    <h5 class="card-title">$36.00</h5>
-                                    <p class="card-text">Chicken Alfredo</p>
-                                    <p>4 Chicken Legs • Chili Sauce • Soft Drinks</p>
-                                    <button class="btn btn-outline-success btn-add-to-cart"><i class="fa fa-shopping-cart"></i> Add to cart</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-              </div>
-              <div class="carousel-item">
-                <div class="container d-block w-100">
-                    <div class="row">
-                        <div class="col-md-4">
-                            <div class="card">
-                                <img src="/src/img/pp1.jpeg" class="card-img-top" alt="Crustaceans Lobsters">
-                                <div class="card-body">
-                                    <h5 class="card-title">$51.00</h5>
-                                    <p class="card-text">Crustaceans Lobsters</p>
-                                    <p>4 Chicken Legs • Chili Sauce • Soft Drinks</p>
-                                    <button class="btn btn-outline-success btn-add-to-cart"><i class="fa fa-shopping-cart"></i> Add to cart</button>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="card">
-                                <img src="/src/img/PP2.jpg" class="card-img-top" alt="Chicken Nuggets">
-                                <div class="card-body">
-                                    <h5 class="card-title">$49.00</h5>
-                                    <p class="card-text">Chicken Nuggets</p>
-                                    <p>4 Chicken Legs • Chili Sauce • Soft Drinks</p>
-                                    <button class="btn btn-outline-success btn-add-to-cart" ><i class="fa fa-shopping-cart"></i> Add to cart</button>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="card">
-                                <img src="/src/img/PP3.jpg" class="card-img-top" alt="Chicken Alfredo">
-                                <div class="card-body">
-                                    <h5 class="card-title">$36.00</h5>
-                                    <p class="card-text">Chicken Alfredo</p>
-                                    <p>4 Chicken Legs • Chili Sauce • Soft Drinks</p>
-                                    <button class="btn btn-outline-success btn-add-to-cart"><i class="fa fa-shopping-cart"></i> Add to cart</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-        
-                    <div class="row">
-                        <div class="col-md-4">
-                            <div class="card">
-                                <img src="/src/img/PP4.jpg" class="card-img-top" alt="Crustaceans Lobsters">
-                                <div class="card-body">
-                                    <h5 class="card-title">$51.00</h5>
-                                    <p class="card-text">Crustaceans Lobsters</p>
-                                    <p>4 Chicken Legs • Chili Sauce • Soft Drinks</p>
-                                    <button class="btn btn-outline-success btn-add-to-cart"><i class="fa fa-shopping-cart"></i> Add to cart</button>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="card">
-                                <img src="/src/img/PP5.png" class="card-img-top" alt="Chicken Nuggets">
-                                <div class="card-body">
-                                    <h5 class="card-title">$49.00</h5>
-                                    <p class="card-text">Chicken Nuggets</p>
-                                    <p>4 Chicken Legs • Chili Sauce • Soft Drinks</p>
-                                    <button class="btn btn-outline-success btn-add-to-cart"><i class="fa fa-shopping-cart"></i> Add to cart</button>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="card">
-                                <img src="/src/img/PP6.jpg" class="card-img-top" alt="Chicken Alfredo">
-                                <div class="card-body">
-                                    <h5 class="card-title">$36.00</h5>
-                                    <p class="card-text">Chicken Alfredo</p>
-                                    <p>4 Chicken Legs • Chili Sauce • Soft Drinks</p>
-                                    <button class="btn btn-outline-success btn-add-to-cart"><i class="fa fa-shopping-cart"></i> Add to cart</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-              </div>
-            </div>
-            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
-              <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-              <span class="visually-hidden">Previous</span>
-            </button>
-            <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
-              <span class="carousel-control-next-icon" aria-hidden="true"></span>
-              <span class="visually-hidden">Next</span>
-            </button>
-          </div>
-            
-      
-      
-      
-        
-        
-    
-
-    </section>
-
-    
-     
-
-
-    <?php include 'footer.php'; ?>
-<!-- Модальное окно -->
-<div class="modal fade" id="addToCartModal" tabindex="-1" aria-labelledby="addToCartModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="addToCartModalLabel">Commander</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </form>
         </div>
-        <div class="modal-body">
-          <div class="container-fluid">
-            <div class="row">
-              <div class="col-md-4">
-                <!-- Здесь изображение блюда -->
-                <img src="/src/img/pp1.jpeg" class="img-fluid" alt="Crustaceans Lobsters">
-              </div>
-              <div class="col-md-8">
-                <!-- Здесь информация о блюде -->
-                <h5>Crustaceans Lobsters</h5>
-                <p>Цена: $51.00</p>
-                <p>Состав: 4 Chicken Legs • Chili Sauce • Soft Drinks</p>
-                <!-- Поле для выбора количества -->
-                <div class="input-group mb-3">
-                  <span class="input-group-text">Quantité</span>
-                  <input type="number" class="form-control" value="1" min="1">
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Выбрать еще</button>
-          <button type="button" class="btn btn-success">Choisir encore</button>
-        </div>
-      </div>
-    </div>
-  </div>
-  
-
+    <?php 
+        if ($i % 3 == 2): echo '</div>'; // Закрываем строку каждые 3 карточки
+        endif; 
+        $i++; 
+    endforeach; 
+    ?>
+</div>
+</div>
+<?php include 'footer.php'; ?>
 </body>
+
 </html>
